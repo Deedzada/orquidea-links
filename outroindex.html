@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="pt-pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orquídeas da Vida — Links</title>
+  <meta name="description" content="Orquídeas da Vida — landing de links. Elegância floral, leve e moderna." />
+  <!-- Favicon / Open Graph placeholders -->
+  <meta property="og:title" content="Orquídeas da Vida" />
+  <meta property="og:description" content="Descobre a delicadeza em cada detalhe 🌸" />
+  <style>
+    /* -------------------------
+       RESET / BASE
+       ------------------------- */
+:root {
+  --bg1: #c59aff;            /* roxo orquídea forte */
+  --bg2: #a970ff;            /* roxo médio vibrante */
+  --accent: #8e3fff;         /* lilás escuro, principal */
+  --accent-2: #e0b3ff;       /* lilás claro pro glow */
+  --muted: #ffffffee;        /* texto mais forte */
+  --glass: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --card-radius: 14px;
+  --btn-padding: 14px 20px;
+  --max-width: 720px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color:var(--muted);
+  background: linear-gradient(135deg, var(--bg2), var(--bg1));
+  overflow-x:hidden;
+  min-height:100vh;
+}
+a{color:inherit; text-decoration:none}
+
+/* -------------------------
+   BACKGROUND / PETALS
+   ------------------------- */
+.bg {
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  background: radial-gradient(ellipse at 20% 30%, rgba(224,179,255,0.25), transparent 40%),
+              radial-gradient(ellipse at 85% 70%, rgba(142,63,255,0.25), transparent 40%),
+              linear-gradient(120deg, var(--bg2), var(--bg1));
+  transition: background 0.6s;
+  animation: bgShift 10s ease-in-out infinite;
+}
+
+@keyframes bgShift {
+  0%{filter: hue-rotate(0deg)}
+  50%{filter: hue-rotate(6deg)}
+  100%{filter: hue-rotate(0deg)}
+}
+
+.petal {
+  position:absolute;
+  width:160px;
+  opacity:0.2;
+  transform-origin:center;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 6px 12px rgba(142,63,255,0.25));
+}
+.petal.p1{ left:-30px;  top:10vh; animation: float1 16s linear infinite; transform:rotate(-8deg) }
+.petal.p2{ right:-40px; top:25vh; animation: float2 18s linear infinite; transform:rotate(12deg) }
+.petal.p3{ left:10%;   bottom:5vh; animation: float3 20s linear infinite; transform:rotate(-20deg) }
+.petal.p4{ right:5%;   bottom:15vh; animation: float1 17s linear infinite; transform:rotate(6deg) }
+.petal.p5{ left:40%;   top:5vh; animation: float2 19s linear infinite; transform:rotate(4deg) }
+.petal.p6{ left:70%;   top:40vh; animation: float3 22s linear infinite; transform:rotate(-12deg) }
+
+@keyframes float1 {
+  0%{ transform: translateY(0) rotate(-8deg) scale(.95); opacity:.18 }
+  50%{ transform: translateY(-18px) rotate(-2deg) scale(1); opacity:.26 }
+  100%{ transform: translateY(0) rotate(-8deg) scale(.95); opacity:.18 }
+}
+@keyframes float2 {
+  0%{ transform: translateY(0) rotate(12deg) scale(1); opacity:.18 }
+  50%{ transform: translateY(-28px) rotate(18deg) scale(1.05); opacity:.28 }
+  100%{ transform: translateY(0) rotate(12deg) scale(1); opacity:.18 }
+}
+@keyframes float3 {
+  0%{ transform: translateY(0) rotate(-20deg) scale(.9); opacity:.16 }
+  50%{ transform: translateY(-34px) rotate(-12deg) scale(1); opacity:.28 }
+  100%{ transform: translateY(0) rotate(-20deg) scale(.9); opacity:.16 }
+}
+
+/* -------------------------
+   NAVBAR
+   ------------------------- */
+.navbar {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: var(--max-width);
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+
+  padding: 10px 18px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 6px 32px rgba(134, 22, 123, 0.35);
+
+  opacity: 0;
+  transform: translate(-50%, -10px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+/* Mostra com fade suave */
+.navbar.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* LOGO */
+.logo {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 22px rgba(245, 61, 225, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 32px rgba(245, 61, 225, 0.6);
+}
+
+/* TEXTO */
+.brand h1 {
+  margin: 0;
+  font-family: "Poppins", "Inter", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.4px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(195, 17, 178, 0.6);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+.brand h1:hover {
+  transform: translateY(-1px);
+  text-shadow: 0 0 18px rgba(245, 61, 225, 0.8);
+}
+
+/* RESPONSIVO */
+@media (max-width: 700px) {
+  .navbar {
+    width: calc(100% - 24px);
+    padding: 8px 14px;
+    border-radius: 14px;
+    justify-content: center;
+  }
+  .brand {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .brand h1 {
+    font-size: 15px;
+    text-align: center;
+  }
+}
+
+/* -------------------------
+   LAYOUT / CONTAINER
+   ------------------------- */
+main{
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:120px 20px 60px;
+}
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  text-align:center;
+}
+
+/* -------------------------
+   TITLE / TYPING
+   ------------------------- */
+.title-wrap{ margin-top:6vh; margin-bottom:12px }
+.typed-title {
+  font-size:22px;
+  margin:0 auto 8px;
+  color:#fff;
+  text-shadow: 0 4px 18px rgba(142,63,255,0.6);
+}
+.bio {
+  color: rgba(255,255,255,0.95);
+  margin-bottom:18px;
+  font-size:15px;
+}
+
+/* -------------------------
+   GRID OF BUTTONS (cards)
+   ------------------------- */
+.links-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:14px;
+  align-items:stretch;
+  justify-items:stretch;
+  margin: 8px 0 22px;
+}
+.link-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  transition: all .25s cubic-bezier(.2,.9,.25,1);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+  color:var(--muted);
+  text-align:left;
+}
+.link-card svg{ width:28px; height:28px; flex:0 0 28px; opacity:1 }
+.link-meta{ flex:1; display:flex; flex-direction:column; align-items:flex-start }
+.link-title{ font-weight:600; font-size:15px; color:#fff; margin:0 0 2px }
+.link-sub{ font-size:12px; color: rgba(255,255,255,0.85); margin:0 }
+
+/* hover glow */
+.link-card:hover{
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(142,63,255,0.7);
+  border-color: rgba(224,179,255,0.6);
+  background: rgba(255,255,255,0.18);
+}
+.link-card:hover svg{ filter: drop-shadow(0 0 20px rgba(224,179,255,0.9)) }
+.link-card:active{ transform: scale(0.99) }
+
+/* -------------------------
+   PARTNERS CARDS
+   ------------------------- */
+.partners {
+  margin-top:20px;
+  text-align:left;
+}
+.partners h3{ margin:0 0 10px; font-size:14px; color:rgba(255,255,255,0.95) }
+.partners-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+}
+.partner-card{
+  padding:8px;
+  border-radius:10px;
+  background: rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.25);
+  display:flex; gap:10px; align-items:center;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.partner-card img{ width:44px; height:44px; border-radius:8px; object-fit:cover }
+.partner-card:hover{ transform: translateY(-6px); box-shadow: 0 12px 28px rgba(142,63,255,0.4) }
+
+/* -------------------------
+   RODAPÉ
+   ------------------------- */
+footer{ margin-top:26px; font-size:13px; color: rgba(255,255,255,0.9); text-align:center }
+
+/* -------------------------
+   LOADER (orchid)
+   ------------------------- */
+.loader-wrap{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(180deg, rgba(142,63,255,0.2), rgba(224,179,255,0.15));
+  transition: opacity .45s ease, visibility .45s ease;
+}
+.loader {
+  width:120px; height:120px;
+  display:grid; place-items:center;
+}
+.orchid {
+  width:84px; height:84px;
+  opacity:0;
+  transform: scale(.86) rotate(-6deg);
+  filter: drop-shadow(0 10px 40px rgba(142,63,255,0.45));
+  transition: transform .9s cubic-bezier(.2,.9,.25,1), opacity .45s ease;
+}
+.orchid.animated {
+  opacity:1;
+  transform: scale(1) rotate(0deg);
+}
+.loader.fadeout{
+  opacity:0; visibility:hidden; pointer-events:none;
+}
+
+/* -------------------------
+   RESPONSIVE
+   ------------------------- */
+@media (max-width:700px){
+  .navbar{ left:12px; transform:none; width:calc(100% - 24px) }
+  .links-grid{ grid-template-columns: 1fr; gap:12px }
+  .title-wrap{ margin-top:20px }
+}
+@media(max-width:420px){
+  .brand h1{ font-size:14px }
+  .typed-title{ font-size:18px }
+  .loader{ width:96px; height:96px }
+  .orchid{ width:64px; height:64px }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND LAYERS -->
+  <div class="bg" aria-hidden="true">
+    <!-- petals (inline svg shapes) -->
+    <svg class="petal p1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 10 C130 10, 170 40, 150 80 C130 120, 70 140, 40 110 C10 80, 40 20, 100 10Z" fill="#f4e7ff" />
+    </svg>
+    <svg class="petal p2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 20 C140 30, 170 70, 150 110 C130 150, 70 160, 40 120 C20 90, 40 30, 100 20Z" fill="#efe5ff" />
+    </svg>
+    <svg class="petal p3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M110 10 C150 20, 180 70, 160 110 C140 150, 80 160, 50 120 C30 90, 50 30, 110 10Z" fill="#fff6ff" />
+    </svg>
+    <svg class="petal p4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 5 C130 15, 170 55, 150 95 C130 135, 70 150, 40 110 C10 70, 40 10, 100 5Z" fill="#f9f1ff" />
+    </svg>
+    <svg class="petal p5" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M95 15 C125 20, 160 50, 140 90 C120 130, 70 140, 40 100 C20 70, 50 25, 95 15Z" fill="#f2e9ff" />
+    </svg>
+    <svg class="petal p6" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 12 C140 25, 175 65, 155 100 C135 135, 75 150, 45 110 C20 75, 40 20, 100 12Z" fill="#f7eeff" />
+    </svg>
+  </div>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader-wrap" role="status" aria-label="A carregar">
+    <div class="loader" aria-hidden="true">
+      <!-- Minimal orchid SVG as loader icon -->
+      <svg class="orchid" id="orchidSvg" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M32 40c6-6 14-4 18-1 3 3 2 8-1 10-5 4-14 2-17-3" stroke="#fff" stroke-width="1.6" opacity="0.95"/>
+          <path d="M32 40c-6-6-14-4-18-1-3 3-2 8 1 10 5 4 14 2 17-3" stroke="#fff" stroke-width="1.6" opacity="0.95"/>
+          <circle cx="32" cy="22" r="8" fill="#fff" opacity="0.06"/>
+          <path d="M32 28c8 0 12-6 12-6s-4 4-12 4-12-4-12-4 4 6 12 6z" fill="#fff" opacity="0.12"/>
+          <path d="M32 18 l0 -4" stroke="#fff" stroke-width="1.2" opacity="0.9"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+<header class="navbar" id="navbar" aria-hidden="true">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <!-- logo SVG -->
+      <svg viewBox="0 0 48 48" width="36" height="36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#f2e1e6"/>
+            <stop offset="1" stop-color="#edb1e0"/>
+          </linearGradient>
+        </defs>
+        <rect width="48" height="48" rx="12" fill="url(#g)"></rect>
+        <path d="M24 14c6 0 10 5 10 10s-4 10-10 10-10-5-10-10 4-10 10-10z" fill="#fff" opacity="0.08"></path>
+        <path d="M24 20c3 0 5 2 5 5s-2 5-5 5-5-2-5-5 2-5 5-5z" fill="#fff" opacity="0.18"></path>
+      </svg>
+    </div>
+    <h1>Orquídeas da Vida</h1>
+  </div>
+</header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div class="container">
+      <div class="title-wrap">
+        <div class="typed-title" id="typedTitle" aria-live="polite"></div>
+        <p class="bio">Descobre a delicadeza em cada detalhe 🌸</p>
+      </div>
+
+      <!-- links grid -->
+      <div class="links-grid" id="linksGrid">
+        <!-- Example cards: Update hrefs para os links reais -->
+        <a class="link-card" href="#" target="_blank" rel="noopener noreferrer">
+          <!-- TikTok SVG -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 8v8a4 4 0 1 0 4-4V6h3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <div class="link-meta">
+            <div class="link-title">TikTok</div>
+            <div class="link-sub">@teu_usuario</div>
+          </div>
+        </a>
+
+        <a class="link-card" href="#" target="_blank" rel="noopener noreferrer">
+          <!-- Instagram SVG -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.6"/>
+            <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="#fff" stroke-width="1.6" />
+            <circle cx="18" cy="6" r="0.8" fill="#fff"/>
+          </svg>
+          <div class="link-meta">
+            <div class="link-title">Instagram</div>
+            <div class="link-sub">@teu_usuario</div>
+          </div>
+        </a>
+
+        <a class="link-card" href="#" target="_blank" rel="noopener noreferrer">
+          <!-- Facebook SVG -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15 8h2v-3h-2a3 3 0 0 0-3 3v1h-2v3h2v6h3v-6h2.5l.5-3H15v-1a.5.5 0 0 1 .5-.5z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="link-meta">
+            <div class="link-title">Facebook</div>
+            <div class="link-sub">Página Oficial</div>
+          </div>
+        </a>
+
+        <a class="link-card" href="#" target="_blank" rel="noopener noreferrer">
+          <!-- WhatsApp SVG -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 11.5a9 9 0 1 1-2.5-6.2L21 3v8.5z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15.5 8.5c0 .8-.3 1.6-.8 2.2-.5.6-1.2 1-2 1.3-.7.3-1.5.4-2.2.2-.5-.1-1-.3-1.4-.6l-.6-.5-1.1.3.3-1.1-.5-.6c-.3-.4-.5-.9-.6-1.4-.2-.8 0-1.5.2-2.2.3-.8.7-1.5 1.3-2 .6-.5 1.4-.8 2.2-.8.9 0 1.6.2 2.2.6.6.4 1 .9 1.3 1.5.2.4.2.9.2 1.4z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="link-meta">
+            <div class="link-title">WhatsApp</div>
+            <div class="link-sub">Mensagem direta</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- partners / anuncios -->
+      <section class="partners" aria-label="Parceiros e destaques">
+        <h3>🌸 Parceiros & Destaques</h3>
+        <div class="partners-grid">
+          <a class="partner-card" href="#" target="_blank" rel="noopener noreferrer">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='100%' height='100%' fill='%23f4e7ff'/></svg>" alt="Parceiro 1"/>
+            <div>
+              <div style="font-weight:600;color:#fff">Florista X</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.75)">Entrega em Luanda</div>
+            </div>
+          </a>
+          <a class="partner-card" href="#" target="_blank" rel="noopener noreferrer">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='100%' height='100%' fill='%23efe5ff'/></svg>" alt="Parceiro 2"/>
+            <div>
+              <div style="font-weight:600;color:#fff">Ateliê Y</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.75)">Design floral</div>
+            </div>
+          </a>
+          <a class="partner-card" href="#" target="_blank" rel="noopener noreferrer">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><rect width='100%' height='100%' fill='%23f7eeff'/></svg>" alt="Parceiro 3"/>
+            <div>
+              <div style="font-weight:600;color:#fff">Loja Z</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.75)">Produtos naturais</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        🌿 Cultiva beleza todos os dias.
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    /* =========================
+       LOADER: show orchid animation then hide
+       ========================= */
+    (function(){
+      const loader = document.getElementById('loader');
+      const orchid = document.getElementById('orchidSvg');
+      // animate
+      requestAnimationFrame(()=> orchid.classList.add('animated'));
+      // show navbar after loader
+      const NAV = document.getElementById('navbar');
+
+      // total visible time ~1500ms (tweak if needed)
+      const DURATION = 1400;
+      setTimeout(()=> {
+        // fade out loader
+        loader.classList.add('fadeout');
+        // show navbar
+        NAV.classList.add('show');
+      }, DURATION);
+
+      // after fully hidden remove loader from DOM to free resources
+      setTimeout(()=> {
+        if(loader && loader.parentNode) loader.parentNode.removeChild(loader);
+      }, DURATION + 600);
+    })();
+
+    /* =========================
+       TYPING EFFECT (mobile friendly, simple)
+       ========================= */
+    (function(){
+      const el = document.getElementById('typedTitle');
+      const phrases = [
+        'Beleza natural em cada pétala...',
+        'Flores que inspiram leveza...',
+        'Orquídeas, arte viva.'
+      ];
+      let pIndex = 0, charIndex = 0, forward = true;
+
+      function type(){
+        const full = phrases[pIndex];
+        if(forward){
+          charIndex++;
+          if(charIndex > full.length) {
+            forward = false;
+            setTimeout(type, 900);
+            return;
+          }
+        } else {
+          charIndex--;
+          if(charIndex < 0) {
+            forward = true;
+            pIndex = (pIndex + 1) % phrases.length;
+          }
+        }
+        el.textContent = full.slice(0, charIndex);
+        // speed
+        const speed = forward ? 40 : 18;
+        setTimeout(type, speed);
+      }
+
+      // start after navbar shows
+      window.addEventListener('DOMContentLoaded', ()=> setTimeout(type, 600));
+    })();
+
+    /* =========================
+       Accessibility: focus outlines for keyboard users
+       ========================= */
+    (function(){
+      let keyboard = false;
+      window.addEventListener('keydown', (e)=> {
+        if(e.key === 'Tab') {
+          keyboard = true;
+          document.documentElement.classList.add('kbd');
+        }
+      });
+      window.addEventListener('mousedown', ()=> {
+        if(keyboard) {
+          keyboard = false;
+          document.documentElement.classList.remove('kbd');
+        }
+      });
+      // simple visible focus style
+      const style = document.createElement('style');
+      style.innerHTML = ".kbd .link-card:focus{ outline:2px solid rgba(199,159,255,0.35); outline-offset:2px; }";
+      document.head.appendChild(style);
+    })();
+
+    /* =========================
+       NOTE:
+       - Substitui os href="#" pelos links reais.
+       - Podes ajustar DURATION do loader se quiseres ainda mais rápido.
+       - Se preferires, posso gerar uma versão com um SVG de logo mais elaborado.
+       ========================= */
+  </script>
+</body>
+</html>
